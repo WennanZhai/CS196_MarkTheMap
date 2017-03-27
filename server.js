@@ -44,7 +44,8 @@ router.route('/markers')
 			marker.message       = req.body.message;
 			marker.type          = req.body.type;
 			marker.creation_time = req.body.time;
-			marker.times_flagged = req.body.flags;
+			marker.times_flagged = 0;
+			marker.times_like    = 0;
 
 			marker.save(function(err){
 				if(err)
@@ -65,7 +66,36 @@ router.route('/markers')
             res.json(markers);     
 			
 		});
-	});
+	})
+
+	
+
+//----------------------------------------------------------------------------------
+//Searching for markers with the specific title or types |||| ROUTE: /markers/search
+
+router.route('/markers/search')
+    .get(function(req, res){
+     //console.log(req.query.title)
+     //console.log(req.query.type)
+        if(typeof req.query.type != "undefined"){
+            Marker.findByType(req.query.type, function(err, marker){
+        	    console.log("searching type");
+        	    if(err)
+        		    res.send(err);
+        	    res.json(marker);
+            });
+        }
+
+        if(typeof req.query.title != "undefined"){
+            Marker.findByTitle(req.query.title, function(err, marker){
+        	    console.log("searching title")
+        	    if(err)
+        		    res.send(err);
+        	    res.json(marker);
+        });
+    }
+})
+
 
 //------------------------------------------------------------------
 //CONTROL OVER A SINGLE MARKER |||| ROUTE: /markers/:marker_id
@@ -94,7 +124,7 @@ router.route('/markers/:marker_id')
 			marker.message       = req.body.message;
 			marker.type          = req.body.type;
 			marker.creation_time = req.body.time;
-			marker.times_flagged = req.body.flags;  // update the bears info
+			marker.times_flagged = req.body.flags;
 
             marker.save(function(err) {
                 if (err)
@@ -120,23 +150,42 @@ router.route('/markers/:marker_id')
         });
     });
 
+//---------------------------------------------------------------------------------
+//Add flag or like to a marker|||| ROUTE: /Marker/:marker_id/flag & /Marker/:marker_id/like
 
-// on routes that end in /markers/:marker_title
-// ----------------------------------------------------
+router.route('/markers/:marker_id/flag')
+    .put(function(req,res){
+    	Marker.findById(req.params.marker_id, function(err, marker){
+            
+            if(err)
+            	res.send(err);
+            marker.addflag();
+        
+            marker.save(function(err){
+                if(err)
+                	res.send(err);
 
-router.route('/markers/:marker_title')
-    .get(function(req, res) {
-        console.log(req.params.marker_title)
-
-        Marker.findByTitle(req.params.marker_title, function(err, marker) {
-            console.log(req.params.marker_title)
-
-            if (err)
-                res.send(err);
-            res.json(marker);
+                res.json({ message: 'flag placed'});
+            });
         });
-});
+    })
 
+router.route('/markers/:marker_id/like')
+    .put(function(req,res){
+    	Marker.findById(req.params.marker_id, function(err, marker){
+            
+            if(err)
+            	res.send(err);
+            marker.addlike();
+        
+            marker.save(function(err){
+                if(err)
+                	res.send(err);
+
+                res.json({ message: 'like placed'});
+            });
+        });
+    });
 
 //-------------------------------------------------------------------
 //REGISTER ROUTES
