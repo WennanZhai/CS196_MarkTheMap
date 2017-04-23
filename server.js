@@ -44,21 +44,24 @@ router.route('/markers')
 
     //create a marker
 	.post(function(req,res){
-			var marker = new Marker();
-			marker.x_coordinate  = req.body.x;
-			marker.y_coordinate  = req.body.y;
-			marker.title         = req.body.title;
-			marker.message       = req.body.message;
-			marker.type          = req.body.type;
-			marker.creation_time = req.body.time;
-			marker.times_flagged = 0;
-			marker.times_like    = 0;
+		var marker = new Marker();
+		marker.x_coordinate  = req.body.x_coordinate;
+		marker.y_coordinate  = req.body.y_coordinate;
+		marker.title         = req.body.title;
+		marker.message       = req.body.message;
+		marker.type          = req.body.type;
+		marker.creation_time = req.body.time;
+		marker.times_flagged = 0;
+		marker.times_like    = 0;
 
-			marker.save(function(err){
-				if(err)
-					res.send(err);
-				res.json({message:"marker placed!"});
-			});
+		marker.save(function(err, marker){
+			if(err)
+				res.send(err);
+			res.json({
+                data: marker,
+                message:"marker placed!"
+            });
+		});
 	})
 
 
