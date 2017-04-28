@@ -6,14 +6,25 @@
 
         <!--link our css here-->
 	    <link rel="stylesheet" type="text/css" href="./styles/main.css">
-
+        <script src="./scripts/infobox.js" type="text/javascript"></script>
 
     </head>
+
     <body>
-        <h3>My Google Maps Demo</h3>
-        <!--the map will bew showed here-->
-        <div id="map"></div> 
-    
+        <div>
+        <h3>Mark the Map</h3>
+
+        <ul>
+          <li><a href="default.asp">Filter1</a></li>
+          <li><a href="news.asp">Filter2</a></li>
+          <li><a href="contact.asp">Filter3</a></li>
+          <li><a href="about.asp">Filter4</a></li>
+        </ul>
+        </div>
+        
+        <!--the map will be showed here-->
+        <div id="map">
+        
         <!--?????--> 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         
@@ -21,10 +32,9 @@
         <script src="./scripts/main.js"></script>
         <!--load google map api(may need to subsitute the key value)-->
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3V-enyQaww6Bdy7cMuVyvv-6Rfbxk__U&callback=initMap"></script>
-   
         
-       
-
+        </div>
+        
 
     </body>
 </html>
