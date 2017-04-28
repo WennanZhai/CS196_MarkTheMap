@@ -8,6 +8,7 @@
 	    <link rel="stylesheet" type="text/css" href="./styles/main.css">
         <script src="./scripts/infobox.js" type="text/javascript"></script>
 
+
     </head>
 
     <body>
@@ -25,6 +26,28 @@
         <!--the map will be showed here-->
         <div id="map">
         
+        <!--the map will bew showed here-->
+        <div id="map"></div> 
+    
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <!-- <form action="http://localhost:8080/api/markers/" method="post"> -->
+            <form>
+                <h1 id="info_title"> Place Marker</h1>
+                Title:    
+                <input id="form-title" type="text" name="title"><br>
+                Type:    
+                <input id="form-type" type="text" name="type"><br>
+                Comment:<br>
+                <textarea id="form-comment" name="message" cols="40" rows="5"></textarea><br>
+                <a onclick="submit_marker()" id="form-submit">Submit</a>
+            </form>
+            </div>
+        </div>
+
         <!--?????--> 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         
