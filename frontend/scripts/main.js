@@ -10,7 +10,7 @@ function initMap() {
     //import InfoBox.js
     var s = document.createElement("script");
     s.type = "text/javascript";
-    s.src = "../scripts/infobox.js";
+    s.src = "scripts/infobox.js";
     $("head").append(s);
     
     //store user's position in variable pos
@@ -102,7 +102,7 @@ function submit_marker() {
 
     reload_markers();
     
-    return false;
+    return false;   
 }
 
 function callback(data) {
