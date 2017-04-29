@@ -7,33 +7,19 @@ var clickedLng;
 
 function initMap() {
     
-    //import InfoBox.js
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.src = "../scripts/infobox.js";
-    $("head").append(s);
-    
     //store user's position in variable pos
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function(position){
     	console.log(position.coords.latitude)
     	console.log(position.coords.longitude)
-    	var pos = new google.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
-        )
-        
-        //set up the map 
+    	var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+    //set up the map 
         map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: pos
+                zoom: 18,
+                center: pos
         });
-        
-        //GET data(markers) from the database 
-    	$.ajax({
-        	url: 'http://localhost:8080/api/markers',
-        	type: 'GET',
-        	success: callback
-    	});	
         
         google.maps.event.addListener(map, 'click', function(event) {
         	var lat = event.latLng.lat();
@@ -48,12 +34,10 @@ function initMap() {
 
     	load_markers();
 
-
     },function(){
-            console.log("navigation failed");
+    		console.log("navigation failed");
     });
 }
-
 
 span.onclick = function() {
     modal.style.display = "none";
@@ -111,11 +95,11 @@ function callback(data) {
     for(var i = 0; i < data.length; i++) {
         var marker = data[i];
 
-        var marker_pos = new google.maps.LatLng(
-            marker.x_coordinate,
-            marker.y_coordinate
-        );
-        
+        var marker_pos = {
+            lat: marker.x_coordinate,
+            lng: marker.y_coordinate
+        }
+
         console.log(marker_pos);
     
         var contentString = 
@@ -123,45 +107,34 @@ function callback(data) {
         '<h1 id="info_title">'+marker.title+'</h1>'+
         '<p id="info_type">Type: '+marker.type+'</p>'+
         '<p id="info_time">Time created: '+marker.time+'</p>'+
+
         '<p id="info_message">    '+marker.message+'</p>' ;
-        
-        //using InfoBox instead of InfoWindow to show contentString
-        //myoption is settings for InfoBox
-        var myoption = {
-            content: contentString,
-            position: marker_pos,
-            maxWidth: "220px",
-            alignBottom: true,
-            pixelOffset: new google.maps.Size(-100,-50),
-            closeBoxURL: "",
-            boxClass: "BoxStyle",
-        }
-        
-        var map_marker = new google.maps.Marker({
+
+        var myinfowindow = new google.maps.InfoWindow({
+            content:contentString,
+            maxWidth: 210
+        });
+
+        var map_marker = new google.maps.Marker( {
             position: marker_pos,
             map: map,
             title: marker.title,
-            content: contentString,
             type: marker.type,
             time: marker.creation_time,
             flag: marker.times_flagged,
             like: marker.times_like,
-            infobox: new InfoBox(myoption)
-        });
-        
-        //click markers to show the InfoBox
-        google.maps.event.addListener(map_marker, 'mouseover', function(map_marker) {
-            this.infobox.open(map, this);
-        });
-        google.maps.event.addListener(map_marker, 'mouseout', function(map_marker){
-            this.infobox.close();
+            infowindow: myinfowindow
         });
 
         markers_array.push(map_marker);
 
+        google.maps.event.addListener(map_marker, 'click', function() {
+            this.infowindow.open(map, this);
+        });
+
         
     }    
-    // set up the InfoBox
+    // set up the infoWindow
     //---------------------------------------------------------
        
     //-----------------------------------------------------------
@@ -186,15 +159,11 @@ function addMarker(location) {
     });
 /*    
     $.ajax({
-        url: 'http://localhost:8080/api/markers',
         type: "POST",
-        data: new_markerDB
+        url: 'http://localhost:8080/api/markers',
+        data: !!!!!
         success: post_callback
 });
 */
 
-}
-
-function post_callback(data) {
-    console.log("Marker created");
 }
