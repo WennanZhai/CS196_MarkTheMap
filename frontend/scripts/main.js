@@ -141,11 +141,22 @@ function callback(data) {
         });
 
         markers_array.push(map_marker);
-
+        var open = false;
         google.maps.event.addListener(map_marker, 'click', function() {
             this.infowindow.open(map, this);
+            open = true;
         });
 
+        google.maps.event.addListener(map_marker, 'mouseover',function(){
+        	this.infowindow.open(map, this);
+        	open = false;
+        })
+
+        google.maps.event.addListener(map_marker, 'mouseout', function(){
+        	if (!open){
+        		this.infowindow.close(map, this);
+        	}
+        })
         google.maps.event.addListener(map_marker,'rightclick',function(){
             delete_marker(this.id);
         });
