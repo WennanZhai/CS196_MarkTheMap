@@ -3,20 +3,21 @@
     <head>
         <meta charset="utf-8">
 	    <title></title>
-
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
         <!--link our css here-->
 	    <link rel="stylesheet" type="text/css" href="./styles/main.css">
 
     </head>
     <body>
-        <div>
-        <h3>Mark the Map</h3>
-
+        <div class="bar">
+        '<a onclick="delete_marker(marker._id)" id="form-delete">delete</a>'
         <ul>
-          <li><a onclick="load_type()">Filter1</a></li>
-          <li><a onclick="load_type()">Filter2</a></li>
-          <li><a onclick="load_type()">Filter3</a></li>
-          <li><a onclick="load_type()">Filter4</a></li>
+          <li style="float:left"><a class="active">Mark the Map</a></li>
+          <li><a onclick="load_type('Emergency')">Emergency</a></li>
+          <li><a onclick="load_type('Activity')">Activity</a></li>
+          <li><a onclick="load_type('Traffic')">Traffic</a></li>
+          <li><a onclick="load_type('Other')">Other</a></li>
+          <li><a onclick="show_all()">All</a></li>
         </ul>
         </div>
         <!--the map will bew showed here-->
@@ -24,19 +25,16 @@
     
         <div id="myModal" class="modal">
 
-            <!-- Modal content -->
-            <div class="modal-content">
-            <span class="close">&times;</span>
             <!-- <form action="http://localhost:8080/api/markers/" method="post"> -->
+            <div class="form-style-8">
+            <h2>PLACE MARKER</h2>
             <form>
-                <h1 id="info_title"> Place Marker</h1>
-                Title:    
-                <input id="form-title" type="text" name="title"><br>
-                Type:    
-                <input id="form-type" type="text" name="type"><br>
-                Comment:<br>
-                <textarea id="form-comment" name="message" cols="40" rows="5"></textarea><br>
-                <a onclick="submit_marker()" id="form-submit">Submit</a>
+            <input id="form-title" type="text" name="title" placeholder="Title" />
+            <input id="form-type" type="text" name="type" placeholder="Type" />
+            <textarea id="form-comment" placeholder="Message" onkeyup="adjust_textarea(this)"></textarea>
+            <ul>
+                <li><input type="button" value="Submit" onclick="submit_marker()" /></li>
+                <li><input type="button" value="Cancel" onclick="close_popWindow()" /></li>
             </form>
             </div>
         </div>
