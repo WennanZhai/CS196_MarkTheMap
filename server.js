@@ -150,7 +150,7 @@ router.route('/markers/:marker_id')
     	var title = req.body.title;
 
         Marker.remove({
-            _id: req.params.bear_id
+            _id: req.params.marker_id
         }, function(err, marker) {
             if (err)
                 res.send(err);

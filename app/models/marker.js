@@ -18,7 +18,7 @@ var MarkerSchema = new Schema({
     title: String,
     message: String,
     type: String,
-    creation_time: String,
+    creation_time: Date,
   //creator: User
     times_flagged: Number,
     times_like: Number,
