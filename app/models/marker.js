@@ -18,7 +18,8 @@ var MarkerSchema = new Schema({
     title: String,
     message: String,
     type: String,
-    creation_time: Date,
+    time: String,
+    date: String,
   //creator: User
     times_flagged: Number,
     times_like: Number,
@@ -42,10 +43,6 @@ MarkerSchema.statics.findByTitle = function(title_search, cb){
 
 MarkerSchema.statics.findByCoordinate = function(x, y, cb){
     return this.find({x_coordinate:x, y:y_coordinate},cb);
-};
-
-MarkerSchema.statics.findByCreationTime = function(time_search, cb){
-    return this.find({creation_time:time_search}, cb);
 };
 
 MarkerSchema.statics.findByTimesFlagged = function(flag_search, cb){

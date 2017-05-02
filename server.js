@@ -25,7 +25,7 @@ router.use(
         // Cross Origin Requests CORS
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
+        res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
         console.log('someting is happening.')
         next();
     }
@@ -50,7 +50,8 @@ router.route('/markers')
 		marker.title         = req.body.title;
 		marker.message       = req.body.message;
 		marker.type          = req.body.type;
-		marker.creation_time = req.body.time;
+		marker.time          = req.body.time;
+        marker.date          = req.body.date;
 		marker.times_flagged = 0;
 		marker.times_like    = 0;
 
@@ -133,7 +134,8 @@ router.route('/markers/:marker_id')
 			marker.title         = req.body.title;
 			marker.message       = req.body.message;
 			marker.type          = req.body.type;
-			marker.creation_time = req.body.time;
+			marker.time          = req.body.time;
+            marker.date          = req.body.date;
 			marker.times_flagged = req.body.flags;
 
             marker.save(function(err) {
